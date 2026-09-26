@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SA1 · Som previsibles?</title>
+<style>
+:root{--green:#164c3b;--mint:#b9e2d2;--yellow:#efd45b;--cream:#fbfaf4;--ink:#18322b;--line:#d8e4de}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+main{max-width:1280px;margin:auto;padding:34px 20px 64px}
+.bars{display:flex;height:13px;margin-bottom:34px}.bars i:nth-child(1){background:var(--green);flex:1.25}.bars i:nth-child(2){background:var(--mint);flex:1}.bars i:nth-child(3){background:var(--yellow);flex:.9}
+.back{display:inline-block;color:var(--green);font-weight:800;text-decoration:none;margin-bottom:30px}
+.ey{font-size:15px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#55756a}
+h1{font-size:clamp(46px,6.4vw,78px);line-height:.95;letter-spacing:-.035em;margin:10px 0 17px;font-weight:900}
+.lead{font-size:19px;line-height:1.5;max-width:900px;color:#4f6c63;margin-bottom:38px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.card{position:relative;min-height:245px;border-radius:22px;padding:27px;text-decoration:none;color:inherit;border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;transition:.15s}
+.card:hover{transform:translateY(-2px)}
+.card.mint{background:var(--mint)}.card.yellow{background:#f3d391}
+.num{font-size:54px;line-height:1;font-weight:900;color:var(--green);opacity:.28;position:absolute;right:24px;top:20px}
+.card h2{font-size:31px;line-height:1.05;margin:22px 70px 10px 0;font-weight:900}
+.card p{font-size:16px;line-height:1.45;color:#3f5d53;max-width:470px;margin:0 0 18px}
+.go{margin-top:auto;align-self:flex-start;background:var(--green);color:#fff;border-radius:999px;padding:10px 15px;font-size:15px;font-weight:900}
+.note{margin-top:28px;font-size:14px;color:#70837d}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.card{min-height:220px}h1{font-size:50px}}
+</style>
+</head>
+<body>
+<main>
+<div class="bars"><i></i><i></i><i></i></div>
+<a class="back" href="../index.html">← Tornar a Practiquem català!</a>
+
+<div class="ey">2n d'ESO · Situació d'aprenentatge 1</div>
+<h1>SOM PREVISIBLES?</h1>
+<p class="lead">Practica els continguts que estem treballant en aquesta situació d'aprenentatge. Tria una activitat i fes-la tantes vegades com necessitis.</p>
+
+<section class="grid">
+<a class="card mint" href="sillabes/index.html">
+  <span class="num">01</span>
+  <h2>Síl·labes, diftongs i hiats</h2>
+  <p>Practica la separació sil·làbica i aprèn a distingir els diftongs creixents, els decreixents i els hiats.</p>
+  <span class="go">Practica →</span>
+</a>
+
+<a class="card yellow" href="digrafs/index.html">
+  <span class="num">02</span>
+  <h2>Dígrafs</h2>
+  <p>Identifica els dígrafs i practica quins es poden separar i quins han de quedar junts.</p>
+  <span class="go">Practica →</span>
+</a>
+</section>
+
+<p class="note">Anirem afegint noves pràctiques a mesura que avancem.</p>
+</main>
+</body>
+</html>
