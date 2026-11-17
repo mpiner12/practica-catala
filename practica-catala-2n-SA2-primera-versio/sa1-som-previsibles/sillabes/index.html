@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pràctica de síl·labes, diftongs i hiats</title>
+<style>
+body{margin:0;background:#fbfaf4;color:#202733;font-family:system-ui,-apple-system,Segoe UI,Arial,sans-serif}
+main{max-width:950px;margin:auto;padding:24px 16px 40px}
+h1{margin:0 0 6px;font-size:34px}h2{margin-top:0}p{line-height:1.5}.muted{color:#667085}
+.card{background:white;border:1px solid #dce2eb;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 4px 16px #00000008}
+.level-title,.exercise-title{font-size:13px;text-transform:uppercase;font-weight:900;color:#667085;letter-spacing:.04em;margin-bottom:10px}
+.levels{display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap}
+.level{border:2px solid #dce2eb;background:white;border-radius:12px;padding:11px 18px;font-weight:800;cursor:pointer}
+.level.active{border-color:#164c3b;background:#b9e2d2;color:#164c3b}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.tab{border:2px solid #dce2eb;border-radius:14px;padding:14px;background:white;text-align:left;cursor:pointer;min-height:110px}
+.tab:hover{border-color:#8fc7b2}.tab.active{background:#164c3b;border-color:#164c3b;color:white}
+.tab-number{font-size:13px;font-weight:900;opacity:.8}.tab-name{display:block;font-size:17px;font-weight:900;margin:5px 0}
+.tab-example{display:block;font-size:13px;opacity:.8;font-weight:500}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.pill{background:white;border:1px solid #dce2eb;border-radius:999px;padding:7px 11px;font-weight:700}
+.exercise{margin-top:24px;padding-top:20px;border-top:1px solid #e5e9f0}.q{font-size:13px;text-transform:uppercase;font-weight:900;color:#667085;text-align:center}
+.word{text-align:center;font-size:46px;font-weight:900;margin:16px 0}.focus{color:#164c3b;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:5px}
+.instruction{text-align:center;font-size:18px;margin-bottom:18px}.example{text-align:center;color:#667085;font-size:14px}
+input[type=text]{width:100%;box-sizing:border-box;padding:13px;border:2px solid #dce2eb;border-radius:10px;font-size:18px}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:9px;margin:12px 0}
+.choice{padding:13px;border:2px solid #dce2eb;border-radius:10px;cursor:pointer}.choice:hover{background:#f8fafc}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:15px}button{font-family:inherit}
+.primary,.secondary{border:0;border-radius:10px;padding:11px 16px;font-weight:800;cursor:pointer}.primary{background:#164c3b;color:white}.secondary{background:#edf0f5}
+.feedback{display:none;margin-top:14px;padding:13px;border-radius:10px;line-height:1.5}.good{display:block;background:#eaf8ef;color:#12633b}
+.bad{display:block;background:#fff0f0;color:#8b2828}.neutral{display:block;background:#f1f3f6;color:#424b57}
+.challenge{display:none;background:#fff8df;border:1px solid #efd77b;border-radius:12px;padding:14px;margin-top:15px;font-weight:700}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.box{background:#f8fafc;border:1px solid #dce2eb;border-radius:10px;padding:12px}
+
+.guide-card{background:#173b48;color:white;border-color:#173b48}
+.guide-card .kicker,.guide-card h2{color:white}
+.guide-card .box{background:#244f5d;border-color:#3d6875;color:white}
+.guide-card .box small{color:#e4eff2}
+@media(max-width:700px){.tabs{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.word{font-size:38px}}
+
+
+.exercise{display:none;border-top:1px solid #e3e9e5;margin-top:22px;padding-top:22px;scroll-margin-top:18px}
+.exercise.open{display:block !important;animation:reveal .22s ease}
+@keyframes reveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Bloc de teoria / mini guia */
+.guide-card{background:#173b48 !important;color:#fff !important;border-color:#173b48 !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#fff !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#285766 !important;color:#fff !important;border-color:#416f7c !important}
+.guide-card .box small{color:#e7f1f3 !important}
+
+
+/* Síl·labes: teoria fosca */
+.guide-card{background:#173b48 !important;color:#fff !important;border-color:#173b48 !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#fff !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#285766 !important;color:#fff !important;border-color:#416f7c !important}
+.guide-card .box small{color:#e7f1f3 !important}
+
+/* Bloc Recorda que... */
+.guide-card{background:#efd45b !important;color:#18322b !important;border-color:#dfc343 !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#18322b !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#f8e78f !important;color:#18322b !important;border-color:#d8bd45 !important}
+.guide-card .box small{color:#465b54 !important}
+.remember-title{display:flex;align-items:center;gap:9px}
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:#164c3b;color:white;font-family:Georgia,serif;font-size:17px;font-weight:900;font-style:italic;line-height:1}
+
+
+/* Color definitiu del bloc Recorda que... */
+.guide-card{background:#dcecf2 !important;color:#18322b !important;border-color:#b8d3dc !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#18322b !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#f0f7f9 !important;color:#18322b !important;border-color:#b8d3dc !important}
+.guide-card .box small{color:#465b54 !important}
+.guide-card .info-icon{background:#244f5d !important;color:white !important}
+
+
+/* Color definitiu Recorda que: groc suau de la identitat inicial */
+.guide-card{background:#f3d391 !important;color:#18322b !important;border-color:#e1c27f !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#18322b !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#fae8bd !important;color:#18322b !important;border-color:#dfc88f !important}
+.guide-card .box small{color:#465b54 !important}
+.guide-card .info-icon{background:#164c3b !important;color:white !important}
+
+
+/* Ressaltats dins dels exercicis */
+.focus, mark, .highlight{
+  background:#f3d391 !important;
+  color:#18322b !important;
+  border-radius:6px;
+  padding:0 4px;
+  font-weight:900;
+}
+
+
+.test-tab{border-color:#d9bf59}
+.test-tab.active{background:#b78b20 !important;border-color:#b78b20 !important}
+.test-progress{font-weight:900;color:#60736c;margin-bottom:10px}
+.test-score{text-align:center;padding:24px 10px}
+.test-score .big{font-size:72px;line-height:1;font-weight:900;color:#164c3b}
+.review{margin-top:18px;display:grid;gap:9px}
+.review-item{background:#fff7e2;border:1px solid #e3ca85;border-radius:10px;padding:11px;line-height:1.45}
+
+.test-tab{
+  display:flex !important;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  gap:5px;
+  min-height:118px;
+  padding:16px !important;
+  text-align:left;
+}
+.test-tab .tab-num{
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:.06em;
+  opacity:.72;
+}
+.test-tab .tab-title{
+  font-size:17px;
+  line-height:1.15;
+  font-weight:900;
+}
+.test-tab .tab-desc{
+  display:block;
+  font-size:13px;
+  line-height:1.25;
+  font-weight:500;
+  opacity:.78;
+}
+
+</style>
+</head>
+<body>
+<main>
+<div style="display:flex;height:11px;margin-bottom:28px"><span style="background:#164c3b;flex:1.25"></span><span style="background:#b9e2d2;flex:1"></span><span style="background:#efd45b;flex:.9"></span></div>
+<a href="../index.html" style="color:#164c3b;font-weight:800;text-decoration:none;display:inline-block;margin-bottom:18px">← Tornar a SA1 · Som previsibles?</a>
+<h1>Pràctica de síl·labes, diftongs i hiats</h1>
+<p class="muted">Practica al teu ritme. Tria un nivell i després decideix què vols treballar. Funciona completament <b>offline</b>.</p>
+<div class="card">
+<div class="level-title">1 · Tria el nivell</div>
+<div class="levels">
+<button class="level active" data-level="basic">Bàsic</button>
+<button class="level" data-level="advanced">Avançat</button>
+</div>
+<div class="exercise-title">2 · Què vols practicar?</div>
+<div class="tabs">
+<button class="tab" data-mode="syll"><span class="tab-number">EXERCICI 1</span><span class="tab-name">Separa en síl·labes</span><span class="tab-example">paraula → pa-rau-la</span></button>
+<button class="tab" data-mode="class"><span class="tab-number">EXERCICI 2</span><span class="tab-name">Classifica les vocals</span><span class="tab-example">ai → diftong decreixent</span></button>
+<button class="tab" data-mode="mix"><span class="tab-number">EXERCICI 3</span><span class="tab-name">Repte complet</span><span class="tab-example">Separa + classifica</span></button>
+<button class="tab test-tab" data-mode="test">
+      <span class="tab-num">04</span>
+      <span class="tab-title">Posa’t a prova!</span>
+      <span class="tab-desc">10 preguntes · nota final</span>
+    </button>
+</div>
+<div id="app" class="exercise"></div>
+<div id="challenge" class="challenge"></div>
+</div>
+<div class="card guide-card"><h2 class="remember-title"><span class="info-icon">i</span> Recorda que...</h2><div class="grid">
+<div class="box"><b>Diftong decreixent</b><br>Vocal + i/u.<br>Ex.: <b>mai, peu, cau</b></div>
+<div class="box"><b>Diftong creixent</b><br>i/u + vocal en combinacions que formen diftong.<br>Ex.: <b>qua-tre, llen-gua</b></div>
+<div class="box"><b>Hiat</b><br>Les dues vocals queden en síl·labes diferents.<br>Ex.: <b>pa-ís, te-a-tre</b></div>
+<div class="box"><b>Truc</b><br>Primer separa la paraula en síl·labes. Després observa què passa amb les vocals juntes.</div>
+</div></div>
+</main>
+<script>
+const data={
+basic:{
+syll:[["casa","ca-sa"],["paper","pa-per"],["taula","tau-la"],["aire","ai-re"],["mai","mai"],["peu","peu"],["cau","cau"],["quatre","qua-tre"],["llengua","llen-gua"],["poeta","po-e-ta"],["país","pa-ís"],["raïm","ra-ïm"],["teatre","te-a-tre"],["cacau","ca-cau"],["aula","au-la"]],
+class:[["mai","ai","dec","El grup <b>ai</b> forma un diftong decreixent."],["peu","eu","dec","El grup <b>eu</b> forma un diftong decreixent."],["cau","au","dec","El grup <b>au</b> forma un diftong decreixent."],["aire","ai","dec","El grup <b>ai</b> forma un diftong decreixent."],["quatre","ua","cre","El grup <b>ua</b> forma un diftong creixent."],["llengua","ua","cre","El grup <b>ua</b> forma un diftong creixent."],["país","aí","hi","Les vocals queden separades: <b>pa-ís</b>."],["poeta","oe","hi","Les vocals queden separades: <b>po-e-ta</b>."],["teatre","ea","hi","Les vocals queden separades: <b>te-a-tre</b>."],["raïm","aï","hi","La dièresi indica que les vocals se separen: <b>ra-ïm</b>."]],
+mix:[["mai","ai","mai","dec","<b>ai</b> forma un diftong decreixent."],["aire","ai","ai-re","dec","<b>ai</b> forma un diftong decreixent."],["quatre","ua","qua-tre","cre","<b>ua</b> forma un diftong creixent."],["llengua","ua","llen-gua","cre","<b>ua</b> forma un diftong creixent."],["país","aí","pa-ís","hi","La vocal tònica provoca un hiat."],["poeta","oe","po-e-ta","hi","<b>o-e</b> queda en síl·labes diferents."],["teatre","ea","te-a-tre","hi","<b>e-a</b> queda en síl·labes diferents."],["raïm","aï","ra-ïm","hi","La dièresi marca la separació."]]
+},
+advanced:{
+syll:[["família","fa-mí-li-a"],["història","his-tò-ri-a"],["aigua","ai-gua"],["diürn","di-ürn"],["heroïna","he-ro-ï-na"],["observació","ob-ser-va-ci-ó"],["veïna","ve-ï-na"],["freqüència","fre-qüèn-ci-a"],["ciència","ci-èn-ci-a"],["influència","in-flu-èn-ci-a"],["coincidència","co-in-ci-dèn-ci-a"],["agraïment","a-gra-ï-ment"],["conduïa","con-du-ï-a"],["traducció","tra-duc-ci-ó"],["biologia","bi-o-lo-gi-a"]],
+class:[["història","ia","hi","En <b>història</b>, les vocals finals queden separades: his-tò-ri-a."],["família","ia","hi","Les vocals finals queden en síl·labes diferents: fa-mí-li-a."],["diürn","iü","hi","La dièresi marca la separació: di-ürn."],["heroïna","oï","hi","La dièresi indica que <b>o-ï</b> forma hiat."],["veïna","eï","hi","La dièresi indica la separació: ve-ï-na."],["agraïment","aï","hi","La dièresi marca que les vocals pertanyen a síl·labes diferents."],["aigua","ai","dec","El grup <b>ai</b> és un diftong decreixent."],["freqüència","üe","cre","El grup <b>üe</b> forma un diftong creixent."],["conduïa","uï","hi","La dièresi separa les vocals: condu-ï-a."],["ciència","iè","hi","En aquesta paraula, la separació és <b>ci-èn-ci-a</b>."]],
+mix:[["família","ia","fa-mí-li-a","hi","Les vocals finals queden separades."],["història","ia","his-tò-ri-a","hi","Les vocals finals pertanyen a síl·labes diferents."],["diürn","iü","di-ürn","hi","La dièresi marca la separació."],["heroïna","oï","he-ro-ï-na","hi","La dièresi indica el hiat."],["veïna","eï","ve-ï-na","hi","La dièresi marca la separació."],["agraïment","aï","a-gra-ï-ment","hi","Les vocals formen un hiat."],["aigua","ai","ai-gua","dec","<b>ai</b> forma un diftong decreixent."],["freqüència","üe","fre-qüèn-ci-a","cre","<b>üe</b> forma un diftong creixent."],["conduïa","uï","con-du-ï-a","hi","La dièresi marca el hiat."]]
+}};
+const labels={dec:"Diftong decreixent",cre:"Diftong creixent",hi:"Hiat"};
+let level="basic",mode="syll",score=0,round=0,answered=false;
+const app=document.getElementById("app"),scoreEl=document.getElementById("score"),roundEl=document.getElementById("round"),pctEl=document.getElementById("pct"),levelName=document.getElementById("levelName"),challenge=document.getElementById("challenge");
+function stats(){
+  if(scoreEl) scoreEl.textContent=score;
+  if(roundEl) roundEl.textContent=round;
+  const pct=round?Math.round(score/round*100):0;
+  if(pctEl) pctEl.textContent=pct+"%";
+  if(challenge){
+    if(level==="basic"&&round>=10&&pct>=80){
+      challenge.style.display="block";
+      challenge.innerHTML="🎉 <b>Molt bé!</b> Has aconseguit "+pct+"% d'encerts. Ja estàs preparat/ada per provar el <b>nivell avançat</b>.";
+    }else challenge.style.display="none";
+  }
+}
+function resetStats(){score=0;round=0;answered=false;stats()}
+function feedback(ok,msg){const f=document.getElementById("fb");f.className="feedback "+(ok?"good":"bad");f.innerHTML=msg}
+function neutral(msg){const f=document.getElementById("fb");f.className="feedback neutral";f.innerHTML=msg}
+function highlight(word,group){const index=word.indexOf(group);if(index===-1)return word;return word.substring(0,index)+'<span class="focus">'+group+'</span>'+word.substring(index+group.length)}
+function next(){answered=false;const bank=data[level][mode],x=bank[Math.floor(Math.random()*bank.length)];if(mode==="syll")drawS(x);if(mode==="class")drawC(x);if(mode==="mix")drawM(x)}
+function drawS(x){app.innerHTML=`<div class="q">Exercici 1 · Separació sil·làbica</div><div class="word">${x[0]}</div><div class="instruction">Separa aquesta paraula en síl·labes.</div><div class="example">Escriu un guionet entre cada síl·laba. Ex.: <b>ca-sa</b></div><br><input id="ans" type="text" autocomplete="off" placeholder="Escriu aquí la resposta"><div class="actions"><button class="primary" id="check">Comprova</button><button class="secondary" id="next">Una altra paraula</button></div><div id="fb" class="feedback"></div>`;const checkBtn=document.getElementById("check"),nextBtn=document.getElementById("next"),ans=document.getElementById("ans");checkBtn.onclick=()=>{if(answered)return;let v=ans.value.toLowerCase().replace(/\s/g,"");if(!v){neutral("Escriu una resposta abans de comprovar.");return}round++;answered=true;if(v===x[1]){score++;feedback(true,"✓ Correcte! <b>"+x[1]+"</b>")}else feedback(false,"Encara no. La separació correcta és <b>"+x[1]+"</b>.");stats()};nextBtn.onclick=next;ans.onkeydown=e=>{if(e.key==="Enter")checkBtn.click()};ans.focus()}
+function drawC(x){app.innerHTML=`<div class="q">Exercici 2 · Classifica les vocals</div><div class="word">${highlight(x[0],x[1])}</div><div class="instruction">Fixa't en les vocals destacades.<br><b>Quin fenomen formen?</b></div><div class="choices">${Object.entries(labels).map(([k,v])=>`<label class="choice"><input type="radio" name="t" value="${k}"> ${v}</label>`).join("")}</div><div class="actions"><button class="primary" id="check">Comprova</button><button class="secondary" id="next">Una altra paraula</button></div><div id="fb" class="feedback"></div>`;const checkBtn=document.getElementById("check"),nextBtn=document.getElementById("next");checkBtn.onclick=()=>{if(answered)return;const s=document.querySelector('input[name="t"]:checked');if(!s){neutral("Tria una de les tres opcions.");return}round++;answered=true;if(s.value===x[2]){score++;feedback(true,"✓ <b>"+labels[x[2]]+"</b>. "+x[3])}else feedback(false,"La resposta correcta és <b>"+labels[x[2]]+"</b>. "+x[3]);stats()};nextBtn.onclick=next}
+function drawM(x){app.innerHTML=`<div class="q">Exercici 3 · Repte complet</div><div class="word">${highlight(x[0],x[1])}</div><div class="instruction">Ara has de fer les <b>dues coses</b>.</div><p><b>1. Separa la paraula en síl·labes:</b></p><input id="ans" type="text" autocomplete="off" placeholder="Ex.: pa-rau-la"><p style="margin-top:22px"><b>2. Classifica les vocals destacades:</b></p><div class="choices">${Object.entries(labels).map(([k,v])=>`<label class="choice"><input type="radio" name="t" value="${k}"> ${v}</label>`).join("")}</div><div class="actions"><button class="primary" id="check">Comprova el repte</button><button class="secondary" id="next">Una altra paraula</button></div><div id="fb" class="feedback"></div>`;const ans=document.getElementById("ans"),checkBtn=document.getElementById("check"),nextBtn=document.getElementById("next");checkBtn.onclick=()=>{if(answered)return;const syllAnswer=ans.value.toLowerCase().replace(/\s/g,""),typeAnswer=document.querySelector('input[name="t"]:checked');if(!syllAnswer||!typeAnswer){neutral("Completa les dues parts abans de comprovar.");return}round++;answered=true;const correctSyll=syllAnswer===x[2],correctType=typeAnswer.value===x[3];if(correctSyll&&correctType){score++;feedback(true,"🎉 <b>Tot correcte!</b><br>"+x[2]+" · "+labels[x[3]]+"<br>"+x[4])}else{let msg="<b>Revisem-ho:</b><br>";msg+=(correctSyll?"✓ Separació: <b>":"✗ Separació correcta: <b>")+x[2]+"</b><br>";msg+=(correctType?"✓ Classificació: <b>":"✗ Classificació correcta: <b>")+labels[x[3]]+"</b><br><br>"+x[4];feedback(false,msg)}stats()};nextBtn.onclick=next;ans.onkeydown=e=>{if(e.key==="Enter")checkBtn.click()}}
+
+// Banc ampli per a la pràctica de 2n
+const testBanks={
+basic:{
+syll:[
+["casa","ca-sa"],["paper","pa-per"],["camisa","ca-mi-sa"],["escola","es-co-la"],["pilota","pi-lo-ta"],["sabata","sa-ba-ta"],
+["taula","tau-la"],["aire","ai-re"],["mai","mai"],["cau","cau"],["peu","peu"],["neu","neu"],["rei","rei"],["boira","boi-ra"],
+["cuina","cui-na"],["buit","buit"],["nou","nou"],["dijous","di-jous"],["quatre","qua-tre"],["quan","quan"],["llengua","llen-gua"],
+["aigua","ai-gua"],["guant","guant"],["país","pa-ís"],["raïm","ra-ïm"],["veí","ve-í"],["veïna","ve-ï-na"],["teatre","te-a-tre"],
+["poeta","po-e-ta"],["poema","po-e-ma"],["paella","pa-e-lla"],["diürn","di-ürn"],["crear","cre-ar"],["real","re-al"],["teòric","te-ò-ric"],
+["cacau","ca-cau"],["aula","au-la"],["feina","fei-na"],["reina","rei-na"],["caure","cau-re"]
+],
+class:[
+["taula","au","dec"],["aire","ai","dec"],["mai","ai","dec"],["cau","au","dec"],["peu","eu","dec"],["neu","eu","dec"],
+["rei","ei","dec"],["boira","oi","dec"],["cuina","ui","dec"],["buit","ui","dec"],["nou","ou","dec"],["dijous","ou","dec"],
+["quatre","ua","cre"],["quan","ua","cre"],["llengua","ua","cre"],["aigua","ua","cre"],["guant","ua","cre"],
+["país","aí","hi"],["raïm","aï","hi"],["veí","eí","hi"],["veïna","eï","hi"],["teatre","ea","hi"],["poeta","oe","hi"],
+["poema","oe","hi"],["paella","ae","hi"],["diürn","iü","hi"],["crear","ea","hi"],["real","ea","hi"],["teòric","eò","hi"]
+]
+},
+advanced:{
+syll:[
+["carretera","car-re-te-ra"],["biblioteca","bi-bli-o-te-ca"],["geografia","ge-o-gra-fi-a"],["història","his-tò-ri-a"],["família","fa-mí-li-a"],
+["heroïna","he-ro-ï-na"],["egoista","e-go-is-ta"],["observació","ob-ser-va-ci-ó"],["cooperar","co-o-pe-rar"],["teatral","te-a-tral"],
+["aeri","a-e-ri"],["oasi","o-a-si"],["poesia","po-e-si-a"],["ideologia","i-de-o-lo-gi-a"],["diari","di-a-ri"],["viatge","vi-at-ge"],
+["remei","re-mei"],["paraigua","pa-rai-gua"],["aiguat","ai-guat"],["enrenou","en-re-nou"],["europeu","eu-ro-peu"],
+["paisatge","pai-sat-ge"],["feinejar","fei-ne-jar"],["coure","cou-re"],["causa","cau-sa"],["boina","boi-na"],
+["reial","re-ial"],["teoria","te-o-ri-a"],["crear","cre-ar"],["creació","cre-a-ci-ó"],["poètic","po-è-tic"],
+["veïnat","ve-ï-nat"],["agraïment","a-gra-ï-ment"],["raïmet","ra-ï-met"],["països","pa-ï-sos"],["heroic","he-ro-ic"],
+["coet","co-et"],["dues","du-es"],["client","cli-ent"],["orient","o-ri-ent"]
+],
+class:[
+["remei","ei","dec"],["paraigua","ai","dec"],["aiguat","ai","dec"],["enrenou","ou","dec"],["europeu","eu","dec"],["paisatge","ai","dec"],
+["feinejar","ei","dec"],["coure","ou","dec"],["causa","au","dec"],["boina","oi","dec"],
+["paraigua","ua","cre"],["aiguat","ua","cre"],
+["heroïna","oï","hi"],["egoista","oi","hi"],["cooperar","oo","hi"],["teatral","ea","hi"],["aeri","ae","hi"],["oasi","oa","hi"],
+["poesia","oe","hi"],["teoria","eo","hi"],["creació","ea","hi"],["poètic","oè","hi"],["veïnat","eï","hi"],["agraïment","aï","hi"],
+["raïmet","aï","hi"],["països","aï","hi"],["heroic","oi","hi"],["coet","oe","hi"],["dues","ue","hi"],["client","ie","hi"]
+]
+}};
+function esc(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}
+function hiWord(word,group){return word.replace(new RegExp(esc(group),"i"),m=>'<span class="focus">'+m+'</span>')}
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+let testQuestions=[],testIndex=0,testCorrect=0,testReview=[];
+function buildTest(){
+ const B=testBanks[level]||testBanks.basic;
+ let qs=[];
+ B.syll.forEach(x=>qs.push({type:"syll",word:x[0],answer:x[1]}));
+ B.class.forEach(x=>qs.push({type:"class",word:x[0],group:x[1],answer:x[2]}));
+ testQuestions=shuffle(qs).slice(0,10);testIndex=0;testCorrect=0;testReview=[];renderTest();
+}
+function renderTest(){
+ if(testIndex>=10){finishTest();return}
+ const q=testQuestions[testIndex];
+ if(q.type==="syll"){
+   app.innerHTML=`<div class="test-progress">Pregunta ${testIndex+1} de 10</div><div class="q">Posa’t a prova · separació sil·làbica</div><div class="word">${q.word}</div><p class="instruction">Separa la paraula en síl·labes.</p><input id="testAns" type="text" placeholder="Ex.: ca-sa"><div class="actions"><button class="primary" id="testNext">Següent →</button></div>`;
+ }else{
+   app.innerHTML=`<div class="test-progress">Pregunta ${testIndex+1} de 10</div><div class="q">Posa’t a prova · grup vocàlic</div><div class="word">${hiWord(q.word,q.group)}</div><p class="instruction">Classifica el grup vocàlic destacat.</p><div class="choices">${[["dec","Diftong decreixent"],["cre","Diftong creixent"],["hi","Hiat"]].map(x=>`<label class="choice"><input type="radio" name="testClass" value="${x[0]}"> ${x[1]}</label>`).join("")}</div><div class="actions"><button class="primary" id="testNext">Següent →</button></div>`;
+ }
+ document.getElementById("testNext").onclick=submitTest;
+ const inp=document.getElementById("testAns");if(inp){inp.focus();inp.onkeydown=e=>{if(e.key==="Enter")submitTest()}}
+}
+function submitTest(){
+ const q=testQuestions[testIndex];let user="";
+ if(q.type==="syll"){user=(document.getElementById("testAns").value||"").toLowerCase().replace(/\s/g,"");if(!user)return}
+ else{const r=document.querySelector('input[name="testClass"]:checked');if(!r)return;user=r.value}
+ const ok=user===q.answer;if(ok)testCorrect++;
+ else testReview.push({q,user,correct:q.answer});
+ testIndex++;renderTest();
+}
+function finishTest(){
+ const labelsT={dec:"Diftong decreixent",cre:"Diftong creixent",hi:"Hiat"};
+ let rev=testReview.map(r=>`<div class="review-item"><b>${r.q.word}</b>${r.q.group?" · "+r.q.group:""}<br>La teva resposta: ${r.q.type==="class"?(labelsT[r.user]||r.user):r.user}<br><b>Correcta: ${r.q.type==="class"?labelsT[r.correct]:r.correct}</b></div>`).join("");
+ app.innerHTML=`<div class="test-score"><div class="q">Prova acabada</div><div class="big">${testCorrect}/10</div><h2>Nota: ${testCorrect}</h2><p>Has encertat ${testCorrect} de les 10 preguntes.</p></div>${testReview.length?`<h3>Revisa els errors</h3><div class="review">${rev}</div>`:`<div class="feedback good" style="display:block">Perfecte! No has comès cap error.</div>`}<div class="actions"><button class="primary" id="retryTest">Torna-ho a provar</button></div>`;
+ document.getElementById("retryTest").onclick=buildTest;
+}
+
+document.querySelectorAll(".level").forEach(button=>{
+  button.onclick=()=>{
+    document.querySelectorAll(".level").forEach(x=>x.classList.remove("active"));
+    button.classList.add("active");
+    level=button.dataset.level;
+    resetStats();
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    app.innerHTML="";
+    app.classList.remove("open");
+    app.style.display="none";
+  };
+});
+
+document.querySelectorAll(".tab").forEach(button=>{
+  button.onclick=()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    button.classList.add("active");
+    mode=button.dataset.mode;
+    app.classList.add("open");
+    app.style.display="block";
+    if(mode==="test") buildTest(); else next();
+  };
+});
+
+app.innerHTML="";
+app.classList.remove("open");
+app.style.display="none";
+stats();
+</script>
+</body>
+</html>

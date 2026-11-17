@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dígrafs · SA1 Som previsibles?</title>
+<style>
+:root{--green:#164c3b;--mint:#b9e2d2;--yellow:#efd45b;--cream:#fbfaf4;--ink:#18322b;--line:#d8e4de}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
+main{max-width:1100px;margin:auto;padding:30px 18px 55px}.bars{display:flex;height:11px;margin-bottom:26px}.bars i:nth-child(1){background:var(--green);flex:1.25}.bars i:nth-child(2){background:var(--mint);flex:1}.bars i:nth-child(3){background:var(--yellow);flex:.9}
+.back{color:var(--green);font-weight:800;text-decoration:none;display:inline-block;margin-bottom:22px}
+h1{font-size:clamp(38px,5vw,58px);margin:0 0 8px;font-weight:900;letter-spacing:-.03em}.lead{color:#557067;font-size:17px;line-height:1.45}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}.pill{background:white;border:1px solid var(--line);border-radius:999px;padding:8px 12px;font-weight:800}
+.card{background:white;border:1px solid var(--line);border-radius:20px;padding:20px;margin-top:16px}
+.kicker{font-size:13px;text-transform:uppercase;letter-spacing:.06em;font-weight:900;color:#617b72;margin-bottom:10px}
+.levels{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}.level,.tab,.primary,.secondary{font-family:inherit;font-weight:900;cursor:pointer}
+.level{border:2px solid var(--line);background:white;border-radius:999px;padding:9px 15px}.level.active{background:var(--mint);border-color:#8fc7b2;color:var(--green)}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.tab{border:2px solid var(--line);background:#fff;border-radius:15px;padding:14px;text-align:left;min-height:104px}
+.tab.active{background:var(--green);border-color:var(--green);color:white}.tab small{display:block;font-size:12px;opacity:.78;margin-bottom:5px}.tab strong{font-size:17px}.tab span{display:block;font-size:13px;opacity:.8;margin-top:6px;font-weight:500}
+.exercise{border-top:1px solid #e3e9e5;margin-top:22px;padding-top:22px}.q{text-align:center;text-transform:uppercase;font-size:12px;font-weight:900;letter-spacing:.06em;color:#667d75}
+.word{text-align:center;font-size:46px;font-weight:900;margin:17px 0}.focus{color:var(--green);background:var(--mint);border-radius:7px;padding:0 4px}
+.instruction{text-align:center;font-size:18px;line-height:1.45;margin-bottom:16px}.example{text-align:center;color:#6a7d77;font-size:14px}
+input[type=text]{width:100%;padding:13px;border:2px solid var(--line);border-radius:11px;font-size:18px}
+.choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;margin:13px 0}.choice{border:2px solid var(--line);border-radius:11px;padding:13px;cursor:pointer}.choice:hover{background:#f7faf8}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}.primary,.secondary{border:0;border-radius:10px;padding:11px 16px}.primary{background:var(--green);color:#fff}.secondary{background:#edf2ef;color:var(--ink)}
+.feedback{display:none;margin-top:14px;padding:13px;border-radius:11px;line-height:1.5}.good{display:block;background:#e8f5ed;color:#155d3a}.bad{display:block;background:#fff0ef;color:#862d29}.neutral{display:block;background:#f0f2f1;color:#46554f}
+.guide{display:grid;grid-template-columns:1fr 1fr;gap:10px}.box{background:#f8faf8;border:1px solid var(--line);border-radius:12px;padding:14px;line-height:1.45}
+
+.guide-card{background:#173b48;color:white;border-color:#173b48}
+.guide-card .kicker,.guide-card h2{color:white}
+.guide-card .box{background:#244f5d;border-color:#3d6875;color:white}
+.guide-card .box small{color:#e4eff2}
+@media(max-width:720px){.tabs,.guide{grid-template-columns:1fr}.word{font-size:38px}}
+
+
+.exercise{display:none;border-top:1px solid #e3e9e5;margin-top:22px;padding-top:22px;scroll-margin-top:18px}
+.exercise.open{display:block !important;animation:reveal .22s ease}
+@keyframes reveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Bloc de teoria / mini guia */
+.guide-card{background:#173b48 !important;color:#fff !important;border-color:#173b48 !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#fff !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#285766 !important;color:#fff !important;border-color:#416f7c !important}
+.guide-card .box small{color:#e7f1f3 !important}
+
+
+/* Bloc Recorda que... */
+.guide-card{background:#efd45b !important;color:#18322b !important;border-color:#dfc343 !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#18322b !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#f8e78f !important;color:#18322b !important;border-color:#d8bd45 !important}
+.guide-card .box small{color:#465b54 !important}
+.remember-title{display:flex;align-items:center;gap:9px}
+.info-icon{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:#164c3b;color:white;font-family:Georgia,serif;font-size:17px;font-weight:900;font-style:italic;line-height:1}
+
+
+/* Color definitiu del bloc Recorda que... */
+.guide-card{background:#dcecf2 !important;color:#18322b !important;border-color:#b8d3dc !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#18322b !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#f0f7f9 !important;color:#18322b !important;border-color:#b8d3dc !important}
+.guide-card .box small{color:#465b54 !important}
+.guide-card .info-icon{background:#244f5d !important;color:white !important}
+
+
+/* Color definitiu Recorda que: groc suau de la identitat inicial */
+.guide-card{background:#f3d391 !important;color:#18322b !important;border-color:#e1c27f !important}
+.guide-card h2,.guide-card .kicker,.guide-card b{color:#18322b !important}
+.guide-card .grid,.guide-card .guide{background:transparent !important}
+.guide-card .box{background:#fae8bd !important;color:#18322b !important;border-color:#dfc88f !important}
+.guide-card .box small{color:#465b54 !important}
+.guide-card .info-icon{background:#164c3b !important;color:white !important}
+
+
+/* Ressaltats dins dels exercicis */
+.focus, mark, .highlight{
+  background:#f3d391 !important;
+  color:#18322b !important;
+  border-radius:6px;
+  padding:0 4px;
+  font-weight:900;
+}
+
+
+.test-tab{border-color:#d9bf59}
+.test-tab.active{background:#b78b20 !important;border-color:#b78b20 !important}
+.test-progress{font-weight:900;color:#60736c;margin-bottom:10px}
+.test-score{text-align:center;padding:24px 10px}
+.test-score .big{font-size:72px;line-height:1;font-weight:900;color:#164c3b}
+.review{margin-top:18px;display:grid;gap:9px}
+.review-item{background:#fff7e2;border:1px solid #e3ca85;border-radius:10px;padding:11px;line-height:1.45}
+</style>
+</head>
+<body><main>
+<div class="bars"><i></i><i></i><i></i></div>
+<a class="back" href="../index.html">← Tornar a SA1 · Som previsibles?</a>
+<h1>DÍGRAFS</h1>
+<p class="lead">Identifica els dígrafs, descobreix quins se separen i aplica-ho quan separis les paraules en síl·labes.</p>
+
+<div class="card">
+<div class="kicker">1 · Tria el nivell</div>
+<div class="levels"><button class="level active" data-level="basic">Bàsic</button><button class="level" data-level="advanced">Avançat</button></div>
+<div class="kicker">2 · Què vols practicar?</div>
+<div class="tabs">
+<button class="tab" data-mode="find"><small>EXERCICI 1</small><strong>Troba el dígraf</strong><span>Identifica quin dígraf hi ha.</span></button>
+<button class="tab" data-mode="split"><small>EXERCICI 2</small><strong>Se separa o no?</strong><span>Classifica el dígraf.</span></button>
+<button class="tab" data-mode="syll"><small>EXERCICI 3</small><strong>Separa en síl·labes</strong><span>Aplica la regla dels dígrafs.</span></button>
+<button class="tab test-tab" data-mode="test"><small>EXERCICI 4</small><strong>Posa’t a prova!</strong><span>10 preguntes · nota final.</span></button>
+</div>
+<div id="app" class="exercise"></div>
+</div>
+
+<div class="card guide-card"><div class="kicker remember-title"><span class="info-icon">i</span> Recorda que...</div><div class="guide">
+<div class="box"><b>Es poden separar</b><br>rr, ss, sc, ix, tg, tj, tx<br><small>Ex.: car-ro, pas-sar, met-ge, cot-xe</small></div>
+<div class="box"><b>No se separen</b><br>ll, ny, qu, gu<br><small>Ex.: ca-lla, ca-nya, qua-tre, guer-ra</small></div>
+</div></div>
+
+<script>
+const data={
+basic:[
+["carro","rr","yes","car-ro"],["passar","ss","yes","pas-sar"],["cotxe","tx","yes","cot-xe"],["metge","tg","yes","met-ge"],
+["platja","tj","yes","plat-ja"],["caixa","ix","yes","cai-xa"],["canya","ny","no","ca-nya"],["colla","ll","no","co-lla"],
+["quatre","qu","no","qua-tre"],["guerra","gu","no","guer-ra"],["massa","ss","yes","mas-sa"],["barri","rr","yes","bar-ri"]
+],
+advanced:[
+["correspondre","rr","yes","cor-res-pon-dre"],["passadís","ss","yes","pas-sa-dís"],["desconnectar","sc","yes","des-con-nec-tar"],
+["desxifrar","ix","yes","des-xi-frar"],["metgessa","tg","yes","met-ges-sa"],["platja","tj","yes","plat-ja"],
+["despatxar","tx","yes","des-pat-xar"],["companyia","ny","no","com-pa-nyi-a"],["allunyar","ll","no","a-llu-nyar"],
+["qüestió","qu","no","qües-ti-ó"],["guitarra","gu","no","gui-tar-ra"],["carretera","rr","yes","car-re-te-ra"]
+]};
+let level="basic",mode="find",score=0,round=0,answered=false,last=null;
+const app=document.getElementById("app"),scoreEl=document.getElementById("score"),roundEl=document.getElementById("round"),pctEl=document.getElementById("pct"),levelName=document.getElementById("levelName");
+function stats(){if(scoreEl)scoreEl.textContent=score;if(roundEl)roundEl.textContent=round;if(pctEl)pctEl.textContent=round?Math.round(score/round*100)+"%":"0%"}
+function fb(kind,msg){const f=document.getElementById("fb");f.className="feedback "+kind;f.innerHTML=msg}
+function norm(s){return s.toLowerCase().trim().replace(/\s/g,"")}
+function pick(){let bank=data[level],x;do{x=bank[Math.floor(Math.random()*bank.length)]}while(bank.length>1&&x===last);last=x;return x}
+function next(){answered=false;if(mode==="test"){buildDTest();return}let x=pick();if(mode==="find")drawFind(x);if(mode==="split")drawSplit(x);if(mode==="syll")drawSyll(x)}
+function drawFind(x){
+app.innerHTML=`<div class="q">Exercici 1 · Troba el dígraf</div><div class="word">${x[0]}</div><div class="instruction">Quin dígraf hi ha en aquesta paraula?</div><div class="example">Escriu només les lletres del dígraf. Ex.: <b>ny</b></div><br><input id="ans" type="text" autocomplete="off" placeholder="Escriu el dígraf"><div class="actions"><button class="primary" id="check">Comprova</button><button class="secondary" id="next">Una altra paraula</button></div><div id="fb" class="feedback"></div>`;
+const ans=document.getElementById("ans"),check=document.getElementById("check");check.onclick=()=>{if(answered)return;if(!norm(ans.value)){fb("neutral","Escriu una resposta abans de comprovar.");return}round++;answered=true;if(norm(ans.value)===x[1]){score++;fb("good","✓ Correcte! El dígraf és <b>"+x[1]+"</b>.")}else fb("bad","El dígraf és <b>"+x[1]+"</b>.");stats()};document.getElementById("next").onclick=next;ans.onkeydown=e=>{if(e.key==="Enter")check.click()};ans.focus()}
+function marked(w,d){let i=w.indexOf(d);return i<0?w:w.slice(0,i)+'<span class="focus">'+d+'</span>'+w.slice(i+d.length)}
+function drawSplit(x){
+app.innerHTML=`<div class="q">Exercici 2 · Se separa o no?</div><div class="word">${marked(x[0],x[1])}</div><div class="instruction">Quan separes la paraula en síl·labes, aquest dígraf...</div><div class="choices"><label class="choice"><input type="radio" name="r" value="yes"> <b>SE SEPARA</b></label><label class="choice"><input type="radio" name="r" value="no"> <b>NO SE SEPARA</b></label></div><div class="actions"><button class="primary" id="check">Comprova</button><button class="secondary" id="next">Una altra paraula</button></div><div id="fb" class="feedback"></div>`;
+document.getElementById("check").onclick=()=>{if(answered)return;let r=document.querySelector('input[name="r"]:checked');if(!r){fb("neutral","Tria una opció.");return}round++;answered=true;if(r.value===x[2]){score++;fb("good","✓ Correcte! <b>"+x[1]+"</b> "+(x[2]==="yes"?"se separa":"no se separa")+". → <b>"+x[3]+"</b>")}else fb("bad","En aquest cas, <b>"+x[1]+"</b> "+(x[2]==="yes"?"se separa":"no se separa")+". → <b>"+x[3]+"</b>");stats()};document.getElementById("next").onclick=next}
+function drawSyll(x){
+app.innerHTML=`<div class="q">Exercici 3 · Separa en síl·labes</div><div class="word">${x[0]}</div><div class="instruction">Separa correctament aquesta paraula en síl·labes.</div><div class="example">Recorda fixar-te en el dígraf. Escriu guionets entre síl·labes.</div><br><input id="ans" type="text" autocomplete="off" placeholder="Ex.: ca-nya"><div class="actions"><button class="primary" id="check">Comprova</button><button class="secondary" id="next">Una altra paraula</button></div><div id="fb" class="feedback"></div>`;
+const ans=document.getElementById("ans"),check=document.getElementById("check");check.onclick=()=>{if(answered)return;if(!norm(ans.value)){fb("neutral","Escriu una resposta abans de comprovar.");return}round++;answered=true;if(norm(ans.value)===x[3]){score++;fb("good","✓ Correcte! <b>"+x[3]+"</b>")}else fb("bad","La separació correcta és <b>"+x[3]+"</b>. El dígraf <b>"+x[1]+"</b> "+(x[2]==="yes"?"se separa.":"no se separa."));stats()};document.getElementById("next").onclick=next;ans.onkeydown=e=>{if(e.key==="Enter")check.click()};ans.focus()}
+
+let dTest=[],dTestIndex=0,dTestCorrect=0,dTestReview=[];
+function dShuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function buildDTest(){
+ const bank=dShuffle(data[level]);
+ const types=dShuffle(["find","find","find","split","split","split","syll","syll","syll","syll"]);
+ dTest=bank.slice(0,10).map((x,i)=>({x,type:types[i]}));
+ dTestIndex=0;dTestCorrect=0;dTestReview=[];renderDTest();
+}
+function renderDTest(){
+ if(dTestIndex>=10){finishDTest();return}
+ const {x,type}=dTest[dTestIndex];
+ let body="";
+ if(type==="find") body=`<div class="q">Posa’t a prova · troba el dígraf</div><div class="word">${x[0]}</div><div class="instruction">Quin dígraf hi ha en aquesta paraula?</div><input id="dAns" type="text" placeholder="Escriu el dígraf">`;
+ if(type==="split") body=`<div class="q">Posa’t a prova · se separa o no?</div><div class="word">${marked(x[0],x[1])}</div><div class="instruction">Quan separes la paraula en síl·labes, aquest dígraf...</div><div class="choices"><label class="choice"><input type="radio" name="dChoice" value="yes"> <b>SE SEPARA</b></label><label class="choice"><input type="radio" name="dChoice" value="no"> <b>NO SE SEPARA</b></label></div>`;
+ if(type==="syll") body=`<div class="q">Posa’t a prova · separació sil·làbica</div><div class="word">${x[0]}</div><div class="instruction">Separa correctament la paraula en síl·labes.</div><input id="dAns" type="text" placeholder="Ex.: ca-nya">`;
+ app.innerHTML=`<div class="test-progress">Pregunta ${dTestIndex+1} de 10</div>${body}<div class="actions"><button class="primary" id="dTestNext">Següent →</button></div>`;
+ document.getElementById("dTestNext").onclick=submitDTest;
+ const a=document.getElementById("dAns");if(a){a.focus();a.onkeydown=e=>{if(e.key==="Enter")submitDTest()}}
+}
+function submitDTest(){
+ const {x,type}=dTest[dTestIndex];let user="",correct="";
+ if(type==="find"){user=norm(document.getElementById("dAns").value);correct=x[1];if(!user)return}
+ if(type==="split"){let r=document.querySelector('input[name="dChoice"]:checked');if(!r)return;user=r.value;correct=x[2]}
+ if(type==="syll"){user=norm(document.getElementById("dAns").value);correct=x[3];if(!user)return}
+ let ok=user===correct;if(ok)dTestCorrect++;else dTestReview.push({x,type,user,correct});
+ dTestIndex++;renderDTest();
+}
+function finishDTest(){
+ const yn={yes:"Se separa",no:"No se separa"};
+ let rev=dTestReview.map(r=>`<div class="review-item"><b>${r.x[0]}</b><br>La teva resposta: ${r.type==="split"?yn[r.user]:r.user}<br><b>Correcta: ${r.type==="split"?yn[r.correct]:r.correct}</b></div>`).join("");
+ app.innerHTML=`<div class="test-score"><div class="q">Prova acabada</div><div class="big">${dTestCorrect}/10</div><h2>Nota: ${dTestCorrect}</h2><p>Has encertat ${dTestCorrect} de les 10 preguntes.</p></div>${dTestReview.length?`<h3>Revisa els errors</h3><div class="review">${rev}</div>`:`<div class="feedback good" style="display:block">Perfecte! No has comès cap error.</div>`}<div class="actions"><button class="primary" id="dRetry">Torna-ho a provar</button></div>`;
+ document.getElementById("dRetry").onclick=buildDTest;
+}
+
+document.querySelectorAll(".level").forEach(b=>b.onclick=()=>{document.querySelectorAll(".level").forEach(x=>x.classList.remove("active"));b.classList.add("active");level=b.dataset.level;if(levelName)levelName.textContent=level==="basic"?"Bàsic":"Avançat";score=0;round=0;last=null;stats();document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));app.innerHTML="";app.classList.remove("open")});
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");mode=b.dataset.mode;last=null;next();app.classList.add("open")});
+app.innerHTML="";app.classList.remove("open");stats();
+
+document.querySelectorAll(".tab").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    btn.classList.add("active");
+    mode=btn.dataset.mode;
+    if(typeof last!=="undefined") last=null;
+    if(mode==="test") buildDTest(); else next();
+    app.classList.add("open");
+  });
+});
+
+</script>
+</main></body></html>
